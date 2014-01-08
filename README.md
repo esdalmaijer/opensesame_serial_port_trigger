@@ -23,5 +23,5 @@ The Serial Port Trigger plug-in is distributed under the terms of the GNU Genera
 
 - [http://www.gnu.org/licenses/gpl.txt](http://www.gnu.org/licenses/gpl.txt)
 
-(the short summary is that you are free to use and modify this software as you please, as long as you keep it open source, and give me a bit of credit. Most importantly: the developers are IN NO WAY RESPONSIBLE for anything bad that may happen including, but not limited to, your mother-in-law moving in, your bike being stolen, the entire free world to catch fire, and serious injury or death.
+The short summary is that you are free to use and modify this software as you please, as long as you keep it open source, and give me a bit of credit. Most importantly: the developers are IN NO WAY RESPONSIBLE for anything bad that may happen including, but not limited to, your mother-in-law moving in, your bike being stolen, the entire free world to catch fire, and serious injury or death.
 

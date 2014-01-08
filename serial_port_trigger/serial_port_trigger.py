@@ -18,14 +18,8 @@ along with OpenSesame. If not, see <http://www.gnu.org/licenses/>.
 from libopensesame import item
 from libqtopensesame import qtplugin
 from openexp.keyboard import keyboard
-from PyQt4 import QtGui, QtCore
 
 import serial
-
-import warnings
-import os
-
-import imp
 
 	
 class serial_port_trigger(item.item):
