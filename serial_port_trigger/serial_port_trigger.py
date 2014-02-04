@@ -37,17 +37,17 @@ class serial_port_trigger(item.item):
 		"""
 		
 		# The item_typeshould match the name of the module
-		self.item_type = "serial_port_trigger"
+		self.item_type = u"serial_port_trigger"
 		
 		# Provide a short accurate description of the item's functionality
-		self.description = "Allows changing the serial port state, useful for sending triggers"
+		self.description = u"Allows changing the serial port state, useful for sending triggers"
 		
 		# Set some item-specific variables
 		self.value = 0
 		self.duration = 500
-		self.port = "COM1"
-		self.autodetect = "no"
-		self.reset = "no"
+		self.port = u"COM1"
+		self.autodetect = u"no"
+		self.reset = u"no"
 		
 		# The parent handles the rest of the contruction
 		item.item.__init__(self, name, experiment, string)
@@ -64,20 +64,21 @@ class serial_port_trigger(item.item):
 		item.item.prepare(self)
 		
 		# autodetect if requested
-		for i in range(100):
-			try:
-				self.experiment.serialport = serial.Serial("COM%d" % i)
-				self.port = i
-				break
-			except:
-				pass
+		if self.get(u"autodetect") == u"yes":
+			for i in range(100):
+				try:
+					self.experiment.serialport = serial.Serial(u"COM%d" % i)
+					self.port = i
+					break
+				except:
+					pass
 
 		# create a Serial instance (use default settings, only pass port)
 		else:
-			self.experiment.serialport = serial.Serial(self.get("port"))
+			self.experiment.serialport = serial.Serial(self.get(u"port"))
 		
 		# report which port will be used
-		print("serial port 'COM%d' initialized" % self.get("port"))
+		print(u"serial port 'COM%d' initialized" % self.get(u"port"))
 		
 		# write a 0 to the serial port
 		self.experiment.serialport.write(chr(0))
@@ -88,7 +89,7 @@ class serial_port_trigger(item.item):
 		self.experiment.cleanup_functions.append(self.experiment.serialport.close)
 		
 		# create keyboard object
-		self.kb = keyboard(self.experiment, keylist=['escape'])
+		self.kb = keyboard(self.experiment, keylist=[u"escape"])
 		
 		# Report success
 		return True
@@ -102,13 +103,13 @@ class serial_port_trigger(item.item):
 		"""
 		
 		# write value to serial port
-		self.experiment.serialport.write(chr(self.get("value")))
+		self.experiment.serialport.write(chr(self.get(u"value")))
 
 		# use keyboard as timeout, allowing for Escape presses to abort experiment
-		self.kb.get_key(timeout=self.get("duration"))
+		self.kb.get_key(timeout=self.get(u"duration"))
 
 		# reset to value 0 is requested
-		if self.get("reset") == "yes":
+		if self.get(u"reset") == u"yes":
 			self.experiment.serialport.write(chr(0))
 				
 		# Report success
@@ -160,15 +161,15 @@ class qtserial_port_trigger(serial_port_trigger, qtplugin.qtplugin):
 		# - creates a QLineEdit		
 		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 		
-		self.add_line_edit_control("value", "Value", tooltip = "Value to set port")
-		self.add_line_edit_control("duration", "Duration", tooltip = "Expecting a value in milliseconds")
-		self.add_line_edit_control("port", "Port Address", tooltip = "Address of the serial port, e.g. COM1")
-		self.add_checkbox_control("autodetect", "Auto Detect", tooltip="Tick to let the system look for the first available serial port")
-		self.add_checkbox_control("reset", "Reset", tooltip="Tick to write a value of 0 after the trigger")
+		self.add_line_edit_control(u"value", u"Value", tooltip=u"Value to set port")
+		self.add_line_edit_control(u"duration", u"Duration", tooltip=u"Expecting a value in milliseconds")
+		self.add_line_edit_control(u"port", u"Port Address", tooltip=u"Address of the serial port, e.g. COM1")
+		self.add_checkbox_control(u"autodetect", u"Auto Detect", tooltip=u"Tick to let the system look for the first available serial port")
+		self.add_checkbox_control(u"reset", u"Reset", tooltip=u"Tick to write a value of 0 after the trigger")
 		
 		# Add a stretch to the edit_vbox, so that the controls do not
 		# stretch to the bottom of the window.
-		self.edit_vbox.addStretch()		
+		self.edit_vbox.addStretch()
 		
 		# Unlock
 		self.lock = False		
